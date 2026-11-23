@@ -3,7 +3,7 @@
 ## Current status
 
 - Current phase: Phase 2 — Authentication and context
-- Current task: Task 2.1 — Implement JWT verification
+- Current task: Task 2.2 — Validate JWT verification rules
 - Overall status: Complete
 
 ## Completed tasks
@@ -21,10 +21,11 @@
 | Initial request and response schemas | Complete | — |
 | Application-level error handling | Complete | — |
 | JWT verification | Complete | — |
+| JWT validation rules | Complete | — |
 
 ## Current task
 
-Phase 2 Task 2.1 is complete.
+Phase 2 Task 2.2 is complete.
 
 Verification:
 - `uv sync` completed successfully.
@@ -35,6 +36,7 @@ Verification:
 - `uv run pytest -q tests/test_schemas.py` passed with 4 tests.
 - `uv run pytest -q tests/test_app.py` passed with 5 tests.
 - `uv run pytest -q tests/test_security.py` passed with 7 tests.
+- `uv run pytest -q tests/test_security.py` passed with 13 tests.
 
 ## Pending tasks
 

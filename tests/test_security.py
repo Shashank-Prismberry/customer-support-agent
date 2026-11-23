@@ -36,6 +36,17 @@ def make_token(**claims) -> str:
     return jwt.encode(payload, SECRET, algorithm="HS256")
 
 
+def make_token_without_claim(claim: str) -> str:
+    payload = {
+        "sub": "00000000-0000-0000-0000-000000000001",
+        "iss": ISSUER,
+        "aud": AUDIENCE,
+        "exp": datetime.now(timezone.utc) + timedelta(minutes=5),
+    }
+    payload.pop(claim)
+    return jwt.encode(payload, SECRET, algorithm="HS256")
+
+
 def test_verify_jwt_accepts_valid_hs256_token():
     claims = verify_jwt(make_token(), make_settings())
 
@@ -97,4 +108,40 @@ def test_verify_jwt_requires_configured_secret():
     config = Settings(_env_file=None, jwt_secret_key=None)
 
     with pytest.raises(JWTVerificationError, match="secret is not configured"):
+        verify_jwt(make_token(), config)
+
+
+@pytest.mark.parametrize("claim", ["exp", "iss", "aud"])
+def test_verify_jwt_rejects_missing_required_claim(claim):
+    with pytest.raises(JWTVerificationError):
+        verify_jwt(make_token_without_claim(claim), make_settings())
+
+
+def test_verify_jwt_rejects_malformed_token():
+    with pytest.raises(JWTVerificationError):
+        verify_jwt("not-a-jwt", make_settings())
+
+
+def test_verify_jwt_rejects_none_algorithm():
+    payload = {
+        "sub": "00000000-0000-0000-0000-000000000001",
+        "iss": ISSUER,
+        "aud": AUDIENCE,
+        "exp": datetime.now(timezone.utc) + timedelta(minutes=5),
+    }
+    token = jwt.encode(payload, key="", algorithm="none")
+
+    with pytest.raises(JWTVerificationError):
+        verify_jwt(token, make_settings())
+
+
+def test_verify_jwt_requires_configured_issuer_and_audience():
+    config = Settings(
+        _env_file=None,
+        jwt_secret_key=SECRET,
+        jwt_issuer="",
+        jwt_audience="",
+    )
+
+    with pytest.raises(JWTVerificationError, match="issuer and audience"):
         verify_jwt(make_token(), config)
