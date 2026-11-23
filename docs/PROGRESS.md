@@ -3,7 +3,7 @@
 ## Current status
 
 - Current phase: Phase 1 — Application foundation
-- Current task: Task 1.1 — Create central settings configuration
+- Current task: Task 1.3 — Add health endpoint
 - Overall status: Complete
 
 ## Completed tasks
@@ -16,15 +16,19 @@
 | Initial documentation | Complete | — |
 | Environment template | Complete | — |
 | Central settings configuration | Complete | — |
+| FastAPI application entry point | Complete | — |
+| Health endpoint | Complete | — |
 
 ## Current task
 
-Phase 1 Task 1.1 is complete.
+Phase 1 Task 1.3 is complete.
 
 Verification:
 - `uv sync` completed successfully.
 - `uv run python -c "import support_agent; print(support_agent.__name__)"` completed successfully.
 - `uv run pytest -q tests/test_config.py` passed with 2 tests.
+- `uv run pytest -q tests/test_app.py` passed with 2 tests.
+- `uv run pytest -q tests/test_app.py` passed with 3 tests.
 
 ## Pending tasks
 
