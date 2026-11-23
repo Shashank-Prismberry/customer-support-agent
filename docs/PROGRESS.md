@@ -2,8 +2,8 @@
 
 ## Current status
 
-- Current phase: Phase 1 — Application foundation
-- Current task: Task 1.5 — Add application-level error handling
+- Current phase: Phase 2 — Authentication and context
+- Current task: Task 2.1 — Implement JWT verification
 - Overall status: Complete
 
 ## Completed tasks
@@ -20,10 +20,11 @@
 | Health endpoint | Complete | — |
 | Initial request and response schemas | Complete | — |
 | Application-level error handling | Complete | — |
+| JWT verification | Complete | — |
 
 ## Current task
 
-Phase 1 Task 1.5 is complete.
+Phase 2 Task 2.1 is complete.
 
 Verification:
 - `uv sync` completed successfully.
@@ -33,6 +34,7 @@ Verification:
 - `uv run pytest -q tests/test_app.py` passed with 3 tests.
 - `uv run pytest -q tests/test_schemas.py` passed with 4 tests.
 - `uv run pytest -q tests/test_app.py` passed with 5 tests.
+- `uv run pytest -q tests/test_security.py` passed with 7 tests.
 
 ## Pending tasks
 
