@@ -4,7 +4,12 @@ import jwt
 import pytest
 
 from support_agent.core.config import Settings
-from support_agent.core.security import JWTVerificationError, verify_jwt
+from support_agent.core.security import (
+    JWTVerificationError,
+    authenticated_user_from_claims,
+    verify_jwt,
+)
+from support_agent.schemas.context import UserRole
 
 
 SECRET = "test-jwt-secret-at-least-32-bytes"
@@ -145,3 +150,41 @@ def test_verify_jwt_requires_configured_issuer_and_audience():
 
     with pytest.raises(JWTVerificationError, match="issuer and audience"):
         verify_jwt(make_token(), config)
+
+
+def test_authenticated_user_maps_verified_claims():
+    claims = verify_jwt(make_token(), make_settings())
+
+    user = authenticated_user_from_claims(claims)
+
+    assert str(user.user_id) == "00000000-0000-0000-0000-000000000001"
+    assert str(user.customer_id) == "10000000-0000-0000-0000-000000000001"
+    assert str(user.org_id) == "20000000-0000-0000-0000-000000000001"
+    assert user.role == UserRole.ORG_ADMIN
+    assert user.email == "alice@example.com"
+
+
+@pytest.mark.parametrize("claim", ["sub", "customer_id", "org_id", "role", "email"])
+def test_authenticated_user_rejects_missing_identity_claim(claim):
+    claims = verify_jwt(make_token(), make_settings())
+    claims.pop(claim)
+
+    with pytest.raises(JWTVerificationError, match="Missing identity claim"):
+        authenticated_user_from_claims(claims)
+
+
+@pytest.mark.parametrize(
+    ("claim", "value"),
+    [
+        ("sub", "not-a-uuid"),
+        ("customer_id", "not-a-uuid"),
+        ("org_id", "not-a-uuid"),
+        ("role", "Unknown_Role"),
+    ],
+)
+def test_authenticated_user_rejects_invalid_identity_claim(claim, value):
+    claims = verify_jwt(make_token(), make_settings())
+    claims[claim] = value
+
+    with pytest.raises(JWTVerificationError, match="Invalid identity claims"):
+        authenticated_user_from_claims(claims)
