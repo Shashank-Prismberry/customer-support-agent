@@ -3,7 +3,7 @@
 ## Current status
 
 - Current phase: Phase 1 — Application foundation
-- Current task: Task 1.4 — Add initial request and response schemas
+- Current task: Task 1.5 — Add application-level error handling
 - Overall status: Complete
 
 ## Completed tasks
@@ -19,10 +19,11 @@
 | FastAPI application entry point | Complete | — |
 | Health endpoint | Complete | — |
 | Initial request and response schemas | Complete | — |
+| Application-level error handling | Complete | — |
 
 ## Current task
 
-Phase 1 Task 1.4 is complete.
+Phase 1 Task 1.5 is complete.
 
 Verification:
 - `uv sync` completed successfully.
@@ -31,6 +32,7 @@ Verification:
 - `uv run pytest -q tests/test_app.py` passed with 2 tests.
 - `uv run pytest -q tests/test_app.py` passed with 3 tests.
 - `uv run pytest -q tests/test_schemas.py` passed with 4 tests.
+- `uv run pytest -q tests/test_app.py` passed with 5 tests.
 
 ## Pending tasks
 
