@@ -188,3 +188,32 @@ def test_authenticated_user_rejects_invalid_identity_claim(claim, value):
 
     with pytest.raises(JWTVerificationError, match="Invalid identity claims"):
         authenticated_user_from_claims(claims)
+
+
+@pytest.mark.parametrize(
+    ("role", "org_id"),
+    [
+        ("Org_Admin", "20000000-0000-0000-0000-000000000001"),
+        ("Support_Agent", "20000000-0000-0000-0000-000000000001"),
+        ("End_Customer", "20000000-0000-0000-0000-000000000001"),
+    ],
+)
+def test_authenticated_user_accepts_supported_roles(role, org_id):
+    claims = verify_jwt(make_token(role=role, org_id=org_id), make_settings())
+
+    user = authenticated_user_from_claims(claims)
+
+    assert user.role.value == role
+    assert str(user.org_id) == org_id
+
+
+def test_authenticated_user_never_contains_raw_token():
+    token = make_token()
+    claims = verify_jwt(token, make_settings())
+
+    user = authenticated_user_from_claims(claims)
+    user_data = user.model_dump()
+
+    assert "token" not in user_data
+    assert "bearer" not in user_data
+    assert token not in str(user_data)

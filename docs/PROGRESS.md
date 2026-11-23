@@ -3,7 +3,7 @@
 ## Current status
 
 - Current phase: Phase 2 — Authentication and context
-- Current task: Task 2.4 — Add FastAPI authentication dependency
+- Current task: Task 2.5 — Add tests for valid and invalid identities
 - Overall status: Complete
 
 ## Completed tasks
@@ -24,10 +24,11 @@
 | JWT validation rules | Complete | — |
 | Authenticated user context model | Complete | — |
 | FastAPI authentication dependency | Complete | — |
+| Authentication identity tests | Complete | — |
 
 ## Current task
 
-Phase 2 Task 2.4 is complete.
+Phase 2 Task 2.5 is complete.
 
 Verification:
 - `uv sync` completed successfully.
@@ -41,6 +42,8 @@ Verification:
 - `uv run pytest -q tests/test_security.py` passed with 13 tests.
 - `uv run pytest -q tests/test_security.py` passed with 23 tests.
 - `uv run pytest -q tests/test_app.py` passed with 8 tests.
+- `uv run pytest -q tests/test_security.py` passed with 27 tests.
+- `uv run pytest -q tests/test_app.py` passed with 9 tests.
 
 ## Pending tasks
 

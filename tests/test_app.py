@@ -125,3 +125,26 @@ def test_authentication_dependency_rejects_invalid_token():
 
     assert response.status_code == 401
     assert response.json()["code"] == "UNAUTHORIZED"
+
+
+def test_authentication_dependency_rejects_expired_token(monkeypatch):
+    monkeypatch.setattr(
+        settings,
+        "jwt_secret_key",
+        SecretStr("test-jwt-secret-at-least-32-bytes"),
+    )
+    application = create_app()
+
+    @application.get("/auth-test")
+    def auth_test(user: AuthenticatedUser = Depends(get_current_user)):
+        return {"user_id": str(user.user_id)}
+
+    token = make_access_token(exp=datetime.now(timezone.utc) - timedelta(minutes=1))
+    with TestClient(application) as client:
+        response = client.get(
+            "/auth-test",
+            headers={"Authorization": f"Bearer {token}"},
+        )
+
+    assert response.status_code == 401
+    assert response.json()["code"] == "UNAUTHORIZED"
