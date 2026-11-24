@@ -2,8 +2,8 @@
 
 ## Current status
 
-- Current phase: Phase 3 — LangGraph foundation
-- Current task: Task 3.1 — Define the initial AgentState
+- Current phase: Phase 4 — Request Analyzer
+- Current task: Task 4.1 — Define RequestAnalysis Pydantic schema
 - Overall status: Complete
 
 ## Completed tasks
@@ -26,10 +26,15 @@
 | FastAPI authentication dependency | Complete | — |
 | Authentication identity tests | Complete | — |
 | Initial AgentState | Complete | — |
+| Minimal LangGraph workflow | Complete | — |
+| Basic request node | Complete | — |
+| Compiled graph entry point | Complete | — |
+| Graph execution tests | Complete | — |
+| RequestAnalysis Pydantic schema | Complete | — |
 
 ## Current task
 
-Phase 3 Task 3.1 is complete.
+Phase 4 Task 4.1 is complete.
 
 Verification:
 - `uv sync` completed successfully.
@@ -46,6 +51,11 @@ Verification:
 - `uv run pytest -q tests/test_security.py` passed with 27 tests.
 - `uv run pytest -q tests/test_app.py` passed with 9 tests.
 - `uv run pytest -q tests/test_workflow.py` passed with 2 tests.
+- `uv run pytest -q tests/test_workflow.py` passed with 4 tests.
+- `uv run pytest -q tests/test_workflow.py` passed with 7 tests.
+- `uv run pytest -q tests/test_workflow.py` passed with 8 tests.
+- `uv run pytest -q tests/test_workflow.py` passed with 11 tests.
+- `uv run pytest -q tests/test_analyzer.py` passed with 4 tests.
 
 ## Pending tasks
 
