@@ -2,8 +2,8 @@
 
 ## Current status
 
-- Current phase: Phase 2 — Authentication and context
-- Current task: Task 2.5 — Add tests for valid and invalid identities
+- Current phase: Phase 3 — LangGraph foundation
+- Current task: Task 3.1 — Define the initial AgentState
 - Overall status: Complete
 
 ## Completed tasks
@@ -25,10 +25,11 @@
 | Authenticated user context model | Complete | — |
 | FastAPI authentication dependency | Complete | — |
 | Authentication identity tests | Complete | — |
+| Initial AgentState | Complete | — |
 
 ## Current task
 
-Phase 2 Task 2.5 is complete.
+Phase 3 Task 3.1 is complete.
 
 Verification:
 - `uv sync` completed successfully.
@@ -44,6 +45,7 @@ Verification:
 - `uv run pytest -q tests/test_app.py` passed with 8 tests.
 - `uv run pytest -q tests/test_security.py` passed with 27 tests.
 - `uv run pytest -q tests/test_app.py` passed with 9 tests.
+- `uv run pytest -q tests/test_workflow.py` passed with 2 tests.
 
 ## Pending tasks
 
